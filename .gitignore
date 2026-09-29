@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Datasets
+data/raw/
+data/processed/
+
+# Model files
+*.pth
+*.pt
+*.onnx
+*.tflite
+
+# macOS
+.DS_Store
+
+# Experiment outputs
+results/*.csv
+results/*.png
+results/*.jpg
