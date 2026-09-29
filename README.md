@@ -54,12 +54,9 @@ python src/benchmark.py
 
 This project uses the [Fruits-360 100x100](https://github.com/fruits-360/fruits-360-100x100) dataset for initial model development and evaluation.
 
-Download the dataset and place it in:
-
-data/raw/fruits-360-100x100/
-
 The expected directory structure is:
 
+```text
 data/
 └── raw/
     └── fruits-360-100x100/
@@ -67,7 +64,7 @@ data/
         ├── Test/
         ├── LICENSE
         └── README.md
-
+```
 The `Training` and `Test` directories are used for model training and evaluation, respectively.
 
 > **Note:** The dataset is not included in this repository.
