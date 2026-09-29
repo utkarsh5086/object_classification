@@ -11,7 +11,7 @@ from torchvision.models import (
     MobileNet_V3_Small_Weights,
 )
 
-from src.dataset import (
+from dataset import (
     FruitsVegetablesDataset,
     CLASS_NAMES,
 )

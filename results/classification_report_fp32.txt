@@ -1,0 +1,19 @@
+Test accuracy: 99.3982%
+Macro F1: 0.9906
+Total parameters: 1526056
+FP32 checkpoint size: 5.95 MB
+
+              precision    recall  f1-score   support
+
+      Garlic     1.0000    1.0000    1.0000       160
+      Ginger     1.0000    1.0000    1.0000       243
+   Onion Red     0.9609    0.9982    0.9792       542
+ Onion White     1.0000    0.9113    0.9536       248
+  Potato Red     1.0000    0.9967    0.9983       301
+Potato Sweet     0.9868    1.0000    0.9934       150
+Potato White     1.0000    1.0000    1.0000       150
+      Tomato     1.0000    1.0000    1.0000      2194
+
+    accuracy                         0.9940      3988
+   macro avg     0.9935    0.9883    0.9906      3988
+weighted avg     0.9942    0.9940    0.9939      3988
