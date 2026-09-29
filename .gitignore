@@ -11,6 +11,8 @@ env/
 # Datasets
 data/raw/
 data/processed/
+data/processed/
+data/real_world/
 
 # Model files
 *.pth
