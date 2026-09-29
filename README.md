@@ -121,8 +121,8 @@ models/mobilenet_v3_small_fp32_best.pth
 
 ## License
 
-The source code in this repository is released under the MIT License.
+The source code in this repository is licensed under the
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
 The Fruits-360 dataset is not included in this repository. Please refer to the
-dataset's [license](https://github.com/fruits-360/fruits-360-100x100/blob/main/LICENSE)
-and terms of use before using or redistributing the dataset.
+dataset's license and terms of use before using or redistributing the dataset.
