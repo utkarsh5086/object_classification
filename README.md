@@ -5,40 +5,43 @@ This project explores low-cost edge AI for real-world image classification. The 
 
 ### 1. Clone the repository
 
+```bash
 git clone git@github.com:utkarsh5086/object_classification.git
 cd object_classification
+```
 
 ### 2. Create a virtual environment
-
+```bash
 python -m venv .venv
 source .venv/bin/activate
+```
 
 ### 3. Install dependencies
-
+```bash
 pip install -r requirements.txt
-
+```
 ### 4. Prepare the dataset
 
 Download the [Fruits-360 100x100](https://github.com/fruits-360/fruits-360-100x100) dataset and place it under:
-
+```bash
 data/raw/fruits-360-100x100/
-
+```
 ### 5. Train the model
-
+```bash
 python src/train.py
-
+```
 ### 6. Evaluate the model
-
+```bash
 python src/evaluate.py
-
+```
 ### 7. Run inference on an image
-
+```bash
 python src/inference.py path/to/image.jpg
-
+```
 ### 8. Benchmark inference performance
-
+```bash
 python src/benchmark.py
-
+```
 ## Prerequisites
 
 - Python 3.10+
