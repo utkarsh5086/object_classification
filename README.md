@@ -1,184 +1,130 @@
 # Object Classification for Low-Cost Edge AI
+This project explores low-cost edge AI for real-world image classification. The initial focus is on developing lightweight vision models for identifying common fruits and vegetables, with a long-term goal of extending the system to plant identification, health and damage assessment, care recommendations, and object detection.
 
-This project explores low-cost edge AI for image-based object and plant
-classification. The initial goal is to develop a lightweight vision model
-that can identify common fruits and vegetables using inexpensive edge
-hardware.
+## Quick Start
 
-The project will progressively move from controlled object classification
-toward real-world plant identification, damage/health assessment, and
-eventually object detection.
+### 1. Clone the repository
 
----
+git clone git@github.com:utkarsh5086/object_classification.git
+cd object_classification
 
-## Current Status
+### 2. Create a virtual environment
 
-### Baseline model
+python -m venv .venv
+source .venv/bin/activate
 
-- Model: MobileNetV3-Small
-- Pretrained on ImageNet
-- Precision: FP32
-- Input resolution: 224 × 224
-- Number of classes: 8
-- Parameters: 1.53M
-- FP32 checkpoint size: 5.95 MB
+### 3. Install dependencies
 
-### Controlled test performance
+pip install -r requirements.txt
 
-- Test accuracy: 99.40%
-- Macro F1-score: 0.9906
+### 4. Prepare the dataset
 
-### Inference benchmark
+Download the [Fruits-360 100x100](https://github.com/fruits-360/fruits-360-100x100) dataset and place it under:
 
-Measured on an Apple Silicon Mac using PyTorch MPS:
+data/raw/fruits-360-100x100/
 
-- Batch size: 1
-- Mean latency: 6.439 ms
-- Median latency: 5.858 ms
-- P95 latency: 7.648 ms
-- Throughput: 155.29 images/s
+### 5. Train the model
 
-These measurements represent the software baseline on the development
-machine and should not be interpreted as edge-device performance.
+python src/train.py
 
----
+### 6. Evaluate the model
 
-## Objectives
+python src/evaluate.py
 
-The project is being developed in stages:
+### 7. Run inference on an image
 
-1. Object classification
-2. Real-world image classification
-3. Plant identification
-4. Plant damage and health assessment
-5. Care recommendations
-6. Object detection
-7. Deployment on low-cost edge hardware
+python src/inference.py path/to/image.jpg
 
-The primary design goal is to investigate the tradeoff between:
+### 8. Benchmark inference performance
 
-- Accuracy
-- Model size
-- Inference latency
-- Memory usage
-- Energy consumption
-- Hardware cost
+python src/benchmark.py
 
----
+## Prerequisites
 
-## Dataset
+- Python 3.10+
+- PyTorch
+- torchvision
+- A CPU, CUDA GPU, or Apple Silicon Mac
+- ~3 GB of storage for the dataset
 
-The initial experiments use the Fruits-360 100x100 dataset.
+## Dataset Setup
 
-Dataset source:
+This project uses the [Fruits-360 100x100](https://github.com/fruits-360/fruits-360-100x100) dataset for initial model development and evaluation.
 
-https://github.com/fruits-360/fruits-360-100x100
+Download the dataset and place it in:
 
-Eight classes are currently selected:
+data/raw/fruits-360-100x100/
 
-- Garlic
-- Ginger
-- Onion Red
-- Onion White
-- Potato Red
-- Potato Sweet
-- Potato White
-- Tomato
+The expected directory structure is:
 
-The dataset is used only for the initial controlled classification
-experiments.
+data/
+└── raw/
+    └── fruits-360-100x100/
+        ├── Training/
+        ├── Test/
+        ├── LICENSE
+        └── README.md
 
-The dataset is not included in this repository.
+The `Training` and `Test` directories are used for model training and evaluation, respectively.
 
----
+> **Note:** The dataset is not included in this repository.
 
-## Model
+## Classes
 
-The baseline model is MobileNetV3-Small pretrained on ImageNet.
+The initial model classifies images into eight categories:
 
-The final classification layer is modified for the eight target classes.
+| Class | Description |
+|---|---|
+| Garlic | Garlic bulbs |
+| Ginger | Ginger root |
+| Onion Red | Red onions |
+| Onion White | White onions |
+| Potato Red | Red-skinned potatoes |
+| Potato Sweet | Sweet potatoes |
+| Potato White | White potatoes |
+| Tomato | Tomatoes |
 
-The current baseline uses FP32 inference.
-
-Quantization and other deployment optimizations may be evaluated later.
-
----
+Some classes combine multiple corresponding folders from the original Fruits-360 dataset into a single logical class.
 
 ## Training
 
-The current training configuration includes:
+The baseline model uses an ImageNet-pretrained MobileNetV3-Small. The
+feature extractor is frozen, and only the final classifier is trained
+for the eight target classes.
 
-- Input size: 224 × 224
-- Batch size: 64
-- Training epochs: 10
-- Initial learning rate: 1e-3
-- 80/20 training-validation split
-- Random horizontal flip
-- Random rotation
-- Color jitter
-- ImageNet normalization
-- Class-weighted cross entropy
+### Training Configuration
 
-The ImageNet-pretrained feature extractor is initially frozen while the
-classification layer is trained.
+| Parameter | Value |
+|---|---|
+| Model | MobileNetV3-Small |
+| Pretraining | ImageNet |
+| Input size | 224 × 224 |
+| Batch size | 64 |
+| Epochs | 10 |
+| Learning rate | 1 × 10⁻³ |
+| Optimizer | Adam |
+| Loss | Class-weighted Cross Entropy |
+| Train/Validation split | 80/20 |
+| Random seed | 42 |
+| Feature extractor | Frozen |
+| Data augmentation | Horizontal flip, rotation, color jitter |
 
-The best validation checkpoint is saved to:
+To train the model:
+```bash
+python src/train.py
+```
 
+The best model checkpoint is saved to:
 models/mobilenet_v3_small_fp32_best.pth
 
-Model checkpoints are excluded from Git.
 
----
-
-## Results
-
-The current FP32 model achieves:
-
-| Metric | Result |
-|---|---:|
-| Test accuracy | 99.40% |
-| Macro F1 | 0.9906 |
-| Parameters | 1,526,056 |
-| Model size | 5.95 MB |
-| Mean latency | 6.439 ms |
-| Median latency | 5.858 ms |
-| P95 latency | 7.648 ms |
-| Throughput | 155.29 images/s |
-
-The controlled Fruits-360 test set is highly structured, so these results
-should not be considered representative of real-world camera performance.
-
----
-
-## Real-World Evaluation
-
-Real-world images are being collected using a phone camera to evaluate
-robustness to conditions not represented in the controlled dataset.
-
-The real-world evaluation will vary:
-
-- Background
-- Lighting
-- Object orientation
-- Object size
-- Camera distance
-- Camera angle
-- Shadows
-- Different physical objects
-
-The real-world dataset is kept locally and is not included in the
-repository.
-
-The current model has successfully classified several initial real-world
-images, with some individual misclassifications observed.
-
-A systematic real-world evaluation will be performed as the dataset grows.
-
----
-
+## Evaluation
 ## Inference
-
-To classify an individual image:
-
-```bash
-python src/inference.py path/to/image.jpg
+## Benchmark
+## Real-World Evaluation
+## Current Results
+## Repository Structure
+## Troubleshooting
+## Roadmap
+## Reproducibility
+## License
