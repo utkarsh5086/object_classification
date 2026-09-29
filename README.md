@@ -73,16 +73,16 @@ The `Training` and `Test` directories are used for model training and evaluation
 
 The initial model classifies images into eight categories:
 
-| Class | Description |
-|---|---|
-| Garlic | Garlic bulbs |
-| Ginger | Ginger root |
-| Onion Red | Red onions |
-| Onion White | White onions |
-| Potato Red | Red-skinned potatoes |
-| Potato Sweet | Sweet potatoes |
-| Potato White | White potatoes |
-| Tomato | Tomatoes |
+| Class |
+|---|
+| Garlic |
+| Ginger |
+| Onion Red |
+| Onion White |
+| Potato Red |
+| Potato Sweet |
+| Potato White |
+| Tomato |
 
 Some classes combine multiple corresponding folders from the original Fruits-360 dataset into a single logical class.
 
@@ -115,16 +115,14 @@ python src/train.py
 ```
 
 The best model checkpoint is saved to:
+```text
 models/mobilenet_v3_small_fp32_best.pth
+```
 
-
-## Evaluation
-## Inference
-## Benchmark
-## Real-World Evaluation
-## Current Results
-## Repository Structure
-## Troubleshooting
-## Roadmap
-## Reproducibility
 ## License
+
+The source code in this repository is released under the MIT License.
+
+The Fruits-360 dataset is not included in this repository. Please refer to the
+dataset's [license](https://github.com/fruits-360/fruits-360-100x100/blob/main/LICENSE)
+and terms of use before using or redistributing the dataset.
